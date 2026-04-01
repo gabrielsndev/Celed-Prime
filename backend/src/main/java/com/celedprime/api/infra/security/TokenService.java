@@ -24,6 +24,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("celed-prime")
                     .withSubject(user.getEmail())
+                    .withClaim("name", user.getName())
                     .withClaim("role", user.getRole().name())
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);

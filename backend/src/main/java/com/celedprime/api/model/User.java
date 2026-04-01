@@ -26,7 +26,7 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserRole role;
+    private UserRole role = UserRole.CLIENT;
 
     @Column(length = 20, nullable = false, unique = true)
     private String phone;

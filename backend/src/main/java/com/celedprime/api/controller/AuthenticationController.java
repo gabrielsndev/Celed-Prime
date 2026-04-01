@@ -53,7 +53,7 @@ public class AuthenticationController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/forgot-password")
+    @PostMapping("/reset-password")
     public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordRequestDTO request){
         this.passwordResetService.resetPasswordWithCode(request.code(),request.newPassword());
         return ResponseEntity.noContent().build();

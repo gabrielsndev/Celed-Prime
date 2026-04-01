@@ -43,4 +43,29 @@ export class AuthService {
     return decoded.sub ?? null; 
   }
 
+
+  public isAuthenticated(): boolean {
+    return !!localStorage.getItem('cp_token'); 
+  }
+
+  public logout(): void {
+    localStorage.removeItem('cp_token');
+    window.location.href = '/login'; 
+  }
+
+  public getUserName(): string | null {
+    const token = localStorage.getItem('cp_token');
+    if (!token) return null;
+
+    try {
+      const decoded = jwtDecode<any>(token);
+      return decoded.name ?? null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+
+
+
 }

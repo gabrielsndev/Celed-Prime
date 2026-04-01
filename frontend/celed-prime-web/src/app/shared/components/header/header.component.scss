@@ -63,6 +63,30 @@
         transform: scale(0.96);
       }
     }
+
+    .btn-icon-logout {
+      background: none;
+      border: none;
+      color: var(--prime-gold); // Ou use var(--prime-orange) se quiser mais destaque
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      span {
+        font-size: 24px;
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      &:hover {
+        background-color: rgba(235, 169, 45, 0.1); // Um fundo dourado bem clarinho
+        transform: scale(1.1);
+      }
+      &:active {
+        transform: scale(0.9);
+      }
+    }
   }
 }
 

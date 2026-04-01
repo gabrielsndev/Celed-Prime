@@ -5,8 +5,12 @@
     </div>
 
     <nav class="nav-actions">
-    <button class="btn-login-header" [routerLink]="['/login']">
-      ENTRAR
-    </button>
-  </nav>
+      @if (authService.isAuthenticated()) {
+        <button class="btn-icon-logout" (click)="authService.logout()" title="Sair">
+          <span class="material-symbols-outlined">logout</span>
+        </button>
+      } @else {
+        <button class="btn-login-header" [routerLink]="['/login']">ENTRAR</button>
+      }
+    </nav>
 </header>

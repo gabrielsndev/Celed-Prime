@@ -14,14 +14,19 @@ export class HomeUserComponent {
   MESES = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
   private router = inject(Router);
   private reservationService = inject(ReservationService);
+  private authService = inject(AuthService)
 
-
-
-  userName: string = 'Gabriel'; 
+  userName: string = 'Usuário'; 
   
   proximasReservas: any[] = [];
 
   ngOnInit(): void {
+
+    const fullUserName = this.authService.getUserName();
+    if (fullUserName) {
+      this.userName = fullUserName ? fullUserName.trim().split(' ')[0] : 'Usuário'
+    }
+
     this.reservationService.getMyReservations(2).subscribe({
       next: (response) => {
         this.proximasReservas = response.content.map(res => {
