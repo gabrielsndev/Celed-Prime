@@ -1,0 +1,134 @@
+.reservation-container {
+  padding: 80px 20px 40px;
+  max-width: 500px;
+  margin: 0 auto;
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+
+    h1 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    .btn-back {
+      background: none;
+      border: none;
+      color: var(--color-text);
+      cursor: pointer;
+    }
+  }
+}
+
+.calendar-wrapper {
+  background: white;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 10px;
+  margin-bottom: 30px;
+
+  ::ng-deep {
+    .mat-calendar-body-selected {
+      background-color: var(--prime-gold) !important;
+    }
+    .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+      border-color: var(--prime-blue);
+    }
+  }
+}
+
+.summary-card {
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-left: 5px solid var(--prime-gold);
+
+  .info, .price-info {
+    label {
+      display: block;
+      font-size: 0.7rem;
+      color: #888;
+      letter-spacing: 1px;
+    }
+    strong {
+      font-size: 1.1rem;
+      text-transform: capitalize;
+    }
+  }
+}
+
+.btn-prime-confirm {
+  background-color: var(--prime-gold);
+  color: white;
+  border: none;
+  padding: 18px;
+  border-radius: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 10px;
+  
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.payment-card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+
+  .qr-code-img {
+    width: 200px;
+    height: 200px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .copy-box {
+    display: flex;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
+    margin: 15px 0;
+
+    input {
+      flex: 1;
+      border: none;
+      background: none;
+      padding: 10px;
+      font-size: 0.8rem;
+      color: #666;
+      outline: none;
+    }
+
+    button {
+      background: var(--prime-gold);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

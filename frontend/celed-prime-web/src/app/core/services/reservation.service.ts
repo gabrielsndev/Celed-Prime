@@ -28,6 +28,12 @@ export class ReservationService {
     return this.http.get<ReservationResponse>(`${this.apiUrl}${API_CONFIG.endpoints.myReservations}`, { params });
   }
 
+  createReservation(data: { date: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}${API_CONFIG.endpoints.createReservation}`, data);
+  }
+
+
+
 
 }
 

@@ -1,0 +1,53 @@
+<div class="reservation-container">
+  <header class="header">
+    <button class="btn-back" routerLink="/home">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <h1>{{ reservaCriada ? 'Pagamento' : 'Nova Reserva' }}</h1>
+  </header>
+
+  <main class="content">
+    @if (!reservaCriada) {
+      <p class="instruction">Selecione uma data disponível:</p>
+      <div class="calendar-wrapper">
+        <mat-calendar 
+          [(selected)]="selectedDate" 
+          [dateFilter]="dateFilter"
+          (selectedChange)="onDateSelected($event)">
+        </mat-calendar>
+      </div>
+
+        @if (selectedDate) {
+        <div class="summary-card">
+            <label>DATA SELECIONADA</label>
+            <strong>{{ selectedDate | date: 'dd/MM/yyyy' }}</strong>
+            <button class="btn-prime-confirm" (click)="onConfirmar()" [disabled]="loading">
+            {{ loading ? 'PROCESSANDO...' : 'CONFIRMAR E GERAR PIX' }}
+            </button>
+        </div>
+        }
+    } @else {
+      <div class="payment-card">
+        <div class="qr-code-section">
+          <p>Escaneie o QR Code abaixo:</p>
+          <img [src]="reservaCriada.qrCodeBase64" alt="QR Code PIX" class="qr-code-img">
+        </div>
+
+        <div class="copy-paste-section">
+          <p>Ou copie o código abaixo:</p>
+          <div class="copy-box">
+            <input type="text" [value]="reservaCriada.pixCopiaECola" readonly>
+            <button (click)="copiarPix()">
+              <span class="material-symbols-outlined">content_copy</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="payment-footer">
+          <p>Sua reserva está <strong>aguardando pagamento</strong>.</p>
+          <button class="btn-finish" routerLink="/home">VOLTAR PARA HOME</button>
+        </div>
+      </div>
+    }
+  </main>
+</div>

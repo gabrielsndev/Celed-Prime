@@ -8,5 +8,7 @@ public record ReservationResponseDTO(
     Long id,
     LocalDate date,
     UserResponseDTO user,
-    ReservationStatus status
+    ReservationStatus status,
+    String pixCopiaECola,
+    String qrCodeBase64
 ) {}

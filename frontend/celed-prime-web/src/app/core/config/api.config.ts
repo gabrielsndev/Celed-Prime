@@ -6,5 +6,6 @@ export const API_CONFIG = {
         login: "/auth/login",
         register: "/auth/register",
         myReservations: "/reserve/my",
+        createReservation: "/reserve/create"
     }
 };

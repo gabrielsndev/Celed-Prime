@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
 import { HomeUserComponent } from './features/home-user/home-user.component';
+import { NewReservationComponent } from './features/new-reservation/new-reservation.component';
 
 export const routes: Routes = [
     {
@@ -12,5 +13,8 @@ export const routes: Routes = [
     },
     {
         path: 'home', component: HomeUserComponent, title: 'Celed Prime | Home User'
-    }
+    },
+    { 
+        path: 'reservas/nova', component: NewReservationComponent, title: 'Celed Prime | New Reserve'
+    },
 ];

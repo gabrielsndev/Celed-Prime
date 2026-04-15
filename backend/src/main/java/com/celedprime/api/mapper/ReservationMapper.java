@@ -21,7 +21,8 @@ public class ReservationMapper {
                 reservation.getId(),
                 reservation.getDate(),
                 UserMapper.toResponse(reservation.getUser()),
-                reservation.getStatus()
+                reservation.getStatus(),
+
         );
     }
 }
