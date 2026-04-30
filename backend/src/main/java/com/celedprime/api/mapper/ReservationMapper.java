@@ -12,7 +12,7 @@ public class ReservationMapper {
         Reservation reservation = new Reservation();
         reservation.setDate(dto.date());
         reservation.setUser(user);
-        reservation.setStatus(ReservationStatus.CONFIRMED);
+        reservation.setStatus(ReservationStatus.PENDING);
         return reservation;
     }
 

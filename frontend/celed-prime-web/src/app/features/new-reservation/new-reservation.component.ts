@@ -73,6 +73,11 @@ export class NewReservationComponent implements OnInit {
 
           this.qrCodeSafeUrl = this.sanitizer.bypassSecurityTrustUrl(base64String);
           this.loading = false;
+        },
+        error: (err) => {
+          this.loading = false;
+          console.error('Erro ao criar reserva:', err);
+          alert(err.error?.message || 'Erro ao processar sua reserva.');
         }
       });
     }
