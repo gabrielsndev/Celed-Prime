@@ -28,13 +28,16 @@ public class Reservation {
     private ReservationStatus status;
 
     @Column(columnDefinition = "TEXT")
-    private String observations;
+    private String pixCopiaECola;
+
+    @Column(columnDefinition = "TEXT")
+    private String qrCodeBase64;
 
     @PrePersist
     protected void onCreate() {
         this.created = LocalDate.now();
         if (this.status == null) {
-            this.status = ReservationStatus.CONFIRMED;
+            this.status = ReservationStatus.PENDING;
         }
     }
 }

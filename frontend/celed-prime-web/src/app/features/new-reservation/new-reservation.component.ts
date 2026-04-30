@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
 import { Router, RouterModule } from '@angular/router';
 import { ReservationService } from '../../core/services/reservation.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'cp-new-reservation',
@@ -13,15 +14,18 @@ import { ReservationService } from '../../core/services/reservation.service';
   templateUrl: './new-reservation.component.html',
   styleUrl: './new-reservation.component.scss'
 })
+
 export class NewReservationComponent implements OnInit {
   private reservationService = inject(ReservationService);
   private router = inject(Router);
+  private sanitizer = inject(DomSanitizer);
   private blockedTimestamps = new Set<number>();
-
+  
+  reservaCriada: any = null;
+  qrCodeSafeUrl: SafeUrl | null = null;
   selectedDate: Date | null = null;
   datesUnavailable: string[] = []; 
   loading = false;
-  reservaCriada: any = null;
 
   ngOnInit() {
     this.loadAvailability();
@@ -62,25 +66,34 @@ export class NewReservationComponent implements OnInit {
       this.reservationService.createReservation({ date: dateStr }).subscribe({
         next: (res) => {
           this.reservaCriada = res;
+
+          const base64String = res.qrCodeBase64.includes('base64,') 
+            ? res.qrCodeBase64 
+            : 'data:image/png;base64,' + res.qrCodeBase64;
+
+          this.qrCodeSafeUrl = this.sanitizer.bypassSecurityTrustUrl(base64String);
           this.loading = false;
-        },
-        error: (err) => {
-          this.loading = false;
-          alert('Erro ao criar reserva.');
         }
       });
     }
   }
 
-
   gerarResumoDaReserva() {
     console.log('Resumo atualizado para:', this.selectedDate);
+  }
+
+  voltar() {
+    if (this.reservaCriada) {
+      this.reservaCriada = null;
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
 
   copiarPix() {
     if (this.reservaCriada?.pixCopiaECola) {
       navigator.clipboard.writeText(this.reservaCriada.pixCopiaECola);
-      alert('Código PIX copiado!');
+      alert('Código PIX copiado com sucesso!');
     }
   }
 

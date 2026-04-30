@@ -22,6 +22,8 @@ public class ReservationMapper {
                 reservation.getDate(),
                 UserMapper.toResponse(reservation.getUser()),
                 reservation.getStatus(),
+                reservation.getPixCopiaECola(),
+                reservation.getQrCodeBase64()
 
         );
     }

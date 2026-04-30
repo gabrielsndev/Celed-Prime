@@ -42,6 +42,13 @@ public class ReservationService {
 
         User user = userService.findEntityById(userId);
         Reservation reserve = ReservationMapper.toEntity(request, user);
+        // 3. Simular a chamada ao Mercado Pago
+        // Quando você integrar de verdade, esses valores virão da API deles
+        String mockPixCode = "00020101021226850014br.gov.bcb.pix2563pix.mercadopago.com.br/qr/v2/52a8b9e1-mock-celed-prime";
+        String mockQrCode = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==";
+
+        reserve.setPixCopiaECola(mockPixCode);
+        reserve.setQrCodeBase64(mockQrCode);
 
         this.repository.save(reserve);
         return ReservationMapper.toResponse(reserve);
