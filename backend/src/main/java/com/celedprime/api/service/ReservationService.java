@@ -7,6 +7,12 @@ import com.celedprime.api.model.Reservation;
 import com.celedprime.api.model.User;
 import com.celedprime.api.model.enums.ReservationStatus;
 import com.celedprime.api.repository.ReservationRepository;
+import com.mercadopago.client.payment.PaymentClient;
+import com.mercadopago.client.payment.PaymentCreateRequest;
+import com.mercadopago.client.payment.PaymentPayerRequest;
+import com.mercadopago.exceptions.MPApiException;
+import com.mercadopago.exceptions.MPException;
+import com.mercadopago.resources.payment.Payment;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -14,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.celedprime.api.infra.exception.BusinessException;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,16 +49,29 @@ public class ReservationService {
 
         User user = userService.findEntityById(userId);
         Reservation reserve = ReservationMapper.toEntity(request, user);
-        // 3. Simular a chamada ao Mercado Pago
-        // Quando você integrar de verdade, esses valores virão da API deles
-        String mockPixCode = "00020101021226850014br.gov.bcb.pix2563pix.mercadopago.com.br/qr/v2/52a8b9e1-mock-celed-prime";
-        String mockQrCode = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==";
 
-        reserve.setPixCopiaECola(mockPixCode);
-        reserve.setQrCodeBase64(mockQrCode);
+        PaymentClient client = new PaymentClient();
+        PaymentCreateRequest paymentRequest = PaymentCreateRequest.builder()
+                .transactionAmount(new BigDecimal("150.00"))
+                .description("Reserva Celed Prime -" + date)
+                .paymentMethodId("pix")
+                .payer(PaymentPayerRequest.builder()
+                        .email(user.getEmail())
+                        .firstName(user.getName())
+                        .build())
+                .build();
 
-        this.repository.save(reserve);
-        return ReservationMapper.toResponse(reserve);
+        try {
+            Payment payment = client.create(paymentRequest);
+            var transactionData = payment.getPointOfInteraction().getTransactionData();
+            reserve.setPaymentId(payment.getId());
+            reserve.setPixCopiaECola(transactionData.getQrCode());
+            reserve.setQrCodeBase64(transactionData.getQrCodeBase64());
+            this.repository.save(reserve);
+            return ReservationMapper.toResponse(reserve);
+        } catch (Exception e) {
+            throw new BusinessException("Falha na comunicação com o provedor de pagamento. Tente novamente");
+        }
     }
 
     public Page<ReservationResponseDTO> findAllByUser(Long userId, Pageable pageable) {

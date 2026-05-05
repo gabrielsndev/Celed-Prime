@@ -33,6 +33,9 @@ public class Reservation {
     @Column(columnDefinition = "TEXT")
     private String qrCodeBase64;
 
+    @Column
+    private Long paymentId;
+
     @PrePersist
     protected void onCreate() {
         this.created = LocalDate.now();
