@@ -118,4 +118,26 @@ public class ReservationService {
                 .distinct()
                 .toList();
     }
+
+
+
+    public void updatePaymentStatus(Long paymentId) {
+        PaymentClient client = new PaymentClient();
+        try {
+            Payment payment = client.get(paymentId);
+            String status = payment.getStatus();
+
+            repository.findByPaymentId(paymentId).ifPresent(reservation -> {
+                if ("approved".equals(status)) {
+                    reservation.setStatus(ReservationStatus.CONFIRMED);
+                } else if ("cancelled".equals(status) || "rejected".equals(status)) {
+                    reservation.setStatus(ReservationStatus.CANCELED);
+                }
+                repository.save(reservation);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
