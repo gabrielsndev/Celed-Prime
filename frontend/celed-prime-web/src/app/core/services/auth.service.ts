@@ -12,14 +12,14 @@ import { jwtDecode, JwtPayload } from 'jwt-decode';
 export class AuthService {
   
   private http = inject(HttpClient);
-  private apiurl = `${API_CONFIG.baseUrl}`;
+  private apiUrl = `${API_CONFIG.baseUrl}`;
 
   public login(credentials: LoginRequest): Observable<LoginResponse>{
-    return this.http.post<LoginResponse>(`${this.apiurl}${API_CONFIG.endpoints.login}`, credentials);
+    return this.http.post<LoginResponse>(`${this.apiUrl}${API_CONFIG.endpoints.login}`, credentials);
   }
 
   public register(credentials: UserRegistration): Observable<UserResponse>{
-    return this.http.post<UserResponse>(`${this.apiurl}${API_CONFIG.endpoints.register}`, credentials);
+    return this.http.post<UserResponse>(`${this.apiUrl}${API_CONFIG.endpoints.register}`, credentials);
   }
 
   public getRole(): string | null {
@@ -64,6 +64,17 @@ export class AuthService {
       return null;
     }
   }
+
+
+
+  forgotPassword(email: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}${API_CONFIG.endpoints.forgotPassword}`, { email });
+  }
+
+  resetPassword(payload: any): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}${API_CONFIG.endpoints.resetPassword}`, payload);
+  }
+
 
 
 

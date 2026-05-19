@@ -3,6 +3,7 @@ import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
 import { HomeUserComponent } from './features/home-user/home-user.component';
 import { NewReservationComponent } from './features/new-reservation/new-reservation.component';
+import { ForgotPasswordComponent } from './features/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
     {
@@ -17,4 +18,7 @@ export const routes: Routes = [
     { 
         path: 'reservas/nova', component: NewReservationComponent, title: 'Celed Prime | New Reserve'
     },
+    {
+        path: 'reset/senha', component: ForgotPasswordComponent, title: 'Celed Prime | Reset Password'
+    }
 ];

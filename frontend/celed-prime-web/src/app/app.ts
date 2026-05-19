@@ -18,10 +18,16 @@ export class App {
   showHeader = true;
 
   constructor() {
+
     this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      this.showHeader = event.url !== '/login';
-    });
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      
+      const hiddenRoutes = ['/login', '/reset/senha'];
+      const currentPath = event.urlAfterRedirects.split('?')[0];
+      const shouldHide = hiddenRoutes.some(route => currentPath.startsWith(route));
+      this.showHeader = !shouldHide;
+
+    })
   }
 }
