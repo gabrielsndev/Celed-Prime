@@ -20,10 +20,11 @@ export class ReservationService {
   }
 
 
-  getMyReservations(size: number = 10): Observable<ReservationResponse> {
+  getMyReservations(page: number = 0, size: number = 10): Observable<ReservationResponse> {
     const params = new HttpParams()
-      .set('size', size.toString())
-      .set('sort', 'date,asc'); 
+    .set('page', page.toString())
+    .set('size', size.toString())
+    .set('sort', 'date,asc');
 
     return this.http.get<ReservationResponse>(`${this.apiUrl}${API_CONFIG.endpoints.myReservations}`, { params });
   }
@@ -42,6 +43,7 @@ export interface ReservationResponse {
   content: any[];
   totalElements: number;
   totalPages: number;
+  number: number;
   last: boolean;
 }
 

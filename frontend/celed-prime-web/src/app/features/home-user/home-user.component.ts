@@ -47,7 +47,7 @@ export class HomeUserComponent {
 
 
   verTodas() {
-    this.router.navigate(['/reservas']);
+    this.router.navigate(['/minhas/reservas']);
   }
 
   novaReserva() {

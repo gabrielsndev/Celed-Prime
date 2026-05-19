@@ -1,0 +1,62 @@
+.reservation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border-left: 6px solid #ccc;
+  transition: transform 0.2s;
+
+  &:hover { transform: translateY(-5px); }
+
+  &.pending { border-left-color: #f1c40f; } // Amarelo/Dourado
+  &.confirmed { border-left-color: #2ecc71; } // Verde
+  &.canceled { border-left-color: #e74c3c; } // Vermelho
+  &.completed { border-left-color: #3498db; } // Azul
+}
+
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #f0f0f0;
+  text-transform: uppercase;
+}
+
+.btn-confirm {
+  width: 100%;
+  background: #d4af37; // Dourado Prime
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  
+  &:hover { background: #bfa030; }
+}
+
+// Estilo do Modal
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 400px;
+  img { width: 200px; margin: 20px 0; }
+}

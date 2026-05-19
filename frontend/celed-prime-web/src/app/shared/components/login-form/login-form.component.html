@@ -30,7 +30,7 @@
     <button type="submit" class="btn-prime-entrar" [disabled]="loginForm.invalid || loading">ENTRAR</button>
 
     <div class="links-footer">
-      <a href="#" class="link-secundario">Esqueci minha senha</a>
+      <a (click)="resetSenha()" class="link-secundario">Esqueci minha senha</a>
       <a (click)="voltarPortal()" class="link-secundario destaque">Não sou membro? Crie sua conta</a>
     </div>
 

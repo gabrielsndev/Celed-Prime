@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoginRequest } from '../../../core/models/auth.model';
 
 @Component({
@@ -55,6 +55,10 @@ export class LoginFormComponent {
         }
       });
     }
+  }
+
+  resetSenha() {
+    this.router.navigate(['reset/senha'])
   }
 
 

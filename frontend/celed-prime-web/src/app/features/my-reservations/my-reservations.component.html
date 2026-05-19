@@ -1,0 +1,61 @@
+<div class="container">
+  <header>
+    <h1>Minhas Estadias</h1>
+    <p>Gerencie suas reservas no Celed Prime</p>
+  </header>
+
+  @if (loading()) {
+    <div class="loader">Carregando...</div>
+  } @else {
+    <div class="reservation-grid">
+      @for (res of reservations(); track res.id) {
+        <div class="card" [ngClass]="res.status.toLowerCase()">
+          <div class="card-header">
+            <span class="date">{{ res.date | date: 'dd/MM/yyyy' }}</span>
+            <span class="status-badge">{{ res.status }}</span>
+          </div>
+          
+          <div class="card-body">
+            <p><i class="ph ph-map-pin"></i> Celed Prime Casa de Campo</p>
+            <p><i class="ph ph-clock"></i> Check-in: 12:00h</p>
+          </div>
+
+          <div class="card-footer">
+            @if (res.status === 'PENDING') {
+              <button class="btn-confirm" (click)="showPayment(res)">
+                CONFIRMAR E PAGAR
+              </button>
+            } @else {
+              <span class="info">Reserva {{ res.status | lowercase }}</span>
+            }
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-state">Nenhuma reserva encontrada.</div>
+      }
+    </div>
+
+    <div class="pagination">
+      <button [disabled]="currentPage() === 0" (click)="loadReservations(currentPage() - 1)">Anterior</button>
+      <span>Página {{ currentPage() + 1 }} de {{ totalPages() }}</span>
+      <button [disabled]="currentPage() + 1 >= totalPages()" (click)="loadReservations(currentPage() + 1)">Próxima</button>
+    </div>
+  }
+
+  @if (selectedPix()) {
+    <div class="modal-overlay" (click)="closePayment()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <h3>Pagamento via PIX</h3>
+        <p>Sua reserva será confirmada automaticamente após o pagamento.</p>
+        
+        <img [src]="'data:image/png;base64,' + selectedPix()?.qrCode" alt="QR Code PIX">
+        
+        <button class="btn-copy" (click)="copyPix()">
+          COPIAR CÓDIGO PIX
+        </button>
+        
+        <button class="btn-close" (click)="closePayment()">FECHAR</button>
+      </div>
+    </div>
+  }
+</div>
